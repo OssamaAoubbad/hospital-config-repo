@@ -1,0 +1,61 @@
+
+
+spring:
+
+  cloud:
+    gateway:
+      # Routes dynamiques basées sur Eureka
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      # Configuration CORS globale
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - Authorization
+              - X-User-Id
+              - X-Username
+              - X-User-Roles
+              - X-Error-Message
+
+      # Filtres par défaut
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    ip-address: 127.0.0.1
+
+
+
+# Secret JWT (DOIT être identique à celui de l'Auth Service)
+jwt:
+  secret: zvZ/WXkRjuhDJMcaBuafzC7EqQkBjvTe9IMxsw2R5A8Pj+58aeLwxrfbCUQGWGNXM3zyKb9UhMCP8dZxGlKxnQ==
+
+# Logs pour debugging
+logging:
+  level:
+    net.aoubbad.apigateway: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: INFO
+
+
+
